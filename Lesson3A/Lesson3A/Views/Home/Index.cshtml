@@ -1,0 +1,142 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    ViewData["js"] = "home.js";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<div class"row">
+    <div class="col-5">
+        <div class="mb-3">
+            <label class="form-label">Select your class:</label>
+            <select id="selClass" class="form-select" onchange="selectclass(this)">
+                <option value="0" selected>--Please select class--</option>
+                <option value="20DTHQA1">Class 20QA1</option>
+                <option value="20DTHQA2">Class 20QA2</option>
+                <option value="20DTHQA3">Class 20QA3</option>
+            </select>
+
+        </div>
+
+    </div>
+    <div class="col-4">
+        <button data-bs-toggle="modal" data-bs-target="#modal"
+                onclick="addNew()" class="btn-outline-info btn-sm">
+            Add New Course
+        </button>
+    </div>
+</div>
+<div>
+    <table id="tblResult" class="table" style="display:none">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Group</th>
+                <th>Code</th>
+                <th>Course</th>
+                <th>Credit</th>
+                <th>Major</th>
+                <th>Note</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>20QA1</td>
+                <td>CMP175</td>
+                <td>Web Programming</td>
+                <td>3</td>
+                <td>Computer Science</td>
+                <td>OFFLINE</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" onclick="goPrev()" href="javascript:void(0)">Previous</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">
+                    <span id="curPage">1</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" onclick="goNext()" href="javascript:void(0)">Next</a></li>
+        </ul>
+    </nav>
+</div>
+<script id="courseTemplate" type="text/x-jquery-tmpl">
+    <tr>
+                <td>${id}</td>
+                <td>${group}</td>
+                <td>${subCode}</td>
+                <td>${courseName}</td>
+                <td>${credit}</td>
+                <td>${major}</td>
+                <td>${note}</td>
+                <td>
+                    <button data-bs-toggle="modal" data-bs-target = "#modal"
+                    onclick="openModal(${id})" class="btn-out-info btn-sm">
+                    Info
+                    </button>
+                    <button 
+                    onclick="deleteCourse(${id})" class="btn-danger btn-sm">
+                    Delete
+                    </button>
+                </td>
+    </tr>
+
+</script>
+<div id="modal" class="modal fade" data-bs-backdrop="static" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3 row">
+                    <label for="txtId" class="col-sm-2 col-form-label">ID</label>
+                    <div class="col-sm-2">
+                        <input type="text" readonly class="form-control-plaintext" id="txtId" value="email@example.com">
+                    </div>
+                    <label for="txtName" class="col-sm-2 col-form-label">Course Name</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="txtName">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="txtGroup" class="col-sm-2 col-form-label">Group</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="txtGroup">
+                    </div>
+                    <label for="txtCredit" class="col-sm-2 col-form-label">Credit</label>
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" id="txtCredit">
+                    </div>
+                    <label for="txtCode" class="col-sm-2 col-form-label">SubCode</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="txtCode">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="txtMajor" class="col-sm-2 col-form-label">Major</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="txtMajor">
+                    </div>
+                    <label for="txtNote" class="col-sm-2 col-form-label">Note</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="txtNote">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="btnSave" type="button" class="btn btn-primary" onclick="save()">Save changes</button>
+                    <button id="btnInsert" type="button" class="btn btn-success" onclick="Insert()">Add</button>
+                   @* <button id="btnDelete" type="button" class="btn btn-success" onclick="Delete()">Delete</button>*@
+                </div>
+            </div>
+        </div>
+    </div>
